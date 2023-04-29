@@ -13,9 +13,9 @@ module.exports = async (req, res, next) => {
         }
         // decode를 통해 verify하고, verify error시 catch로~
         const decodedToken = jwt.verify(token, "ghdwngur")
-        const nickname = decodedToken.nickname
+        const userId = decodedToken.userId
         // 사용자 존재 여부 확인해서,
-        const user = await Users.findOne({ where: { nickname } })
+        const user = await Users.findOne({ where: { userId } })
         // 사용자가 없다면 
         if (!user) {
             // authorization 쿠키를 비우고
@@ -24,7 +24,7 @@ module.exports = async (req, res, next) => {
             return res.status(401).json({ "errorMessage": "토큰 사용자 없음" })
         }
         // res.local에 user로 저장하고,
-        res.local.nickname = nickname
+        res.local.userId = user.userId
         // next()로 다음 작업으로 넘겨줌
         next()
         // 위 단계 중 뭐 하나 잘못되면

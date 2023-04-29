@@ -38,7 +38,7 @@ router.post("/signup", async (req, res) => {
     // 회원 정보 테이블에 등록
     const user = await Users.create({ nickname, password })
     // 가입과 동시에 jwt 발행후 쿠키 전달
-    const token = jwt.sign({ nickname: user.nickname }, "ghdwngur")
+    const token = jwt.sign({ userId: user.userId }, "ghdwngur")
     res.cookie("authorization", `Bearer ${token}`)
     // 회원가입 완료 메세지와 201 상태 코드 전달
     return res.status(201).json({ "message": "회원 가입에 성공하였습니다." })
@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
             return res.status(412).json({ "errorMessage": "닉네임 또는 패스워드를 확인해주세요." })
         } else {
             // 로그인 성공 시, 로그인에 성공한 유저의 정보를 JWT를 활용하여 클라이언트에게 Cookie로 전달하기
-            const token = jwt.sign({ nickname: user.nickname }, "ghdwngur")
+            const token = jwt.sign({ userId: user.userId }, "ghdwngur")
             res.cookie("authorization", `Bearer ${token}`)
             return res.status(200).json({ token })
         }
