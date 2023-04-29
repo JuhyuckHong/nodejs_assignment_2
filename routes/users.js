@@ -5,12 +5,43 @@ const router = express.Router()
 
 // 회원 가입 API
 // 닉네임, 비밀번호, 비밀번호 확인을 request에서 전달받기
-// 닉네임은 최소 3자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9)로 구성하기
-// 비밀번호는 최소 4자 이상이며, 닉네임과 같은 값이 포함된 경우 회원가입에 실패로 만들기
-// 비밀번호 확인은 비밀번호와 정확하게 일치하기
-// 데이터베이스에 존재하는 닉네임을 입력한 채 회원가입 버튼을 누른 경우 
-// "중복된 닉네임입니다." 라는 에러메세지를 response에 포함
-router.post("/signup", (req, res) => {
+router.post("/signup", async (req, res) => {
+    const { nickname, password, confirm } = req.body
+    try {
+        // 닉네임은 최소 3자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9)로 구성되었는지 확인
+        const regex = /^[a-zA-Z0-9]+$/
+        if (nickname.length < 3 || !regex.test(nickname)) {
+            return res.status(412).json({ "errorMessage": "닉네임의 형식이 일치하지 않습니다." })
+        }
+        // 비밀번호는 최소 4자 이상이며, 
+        if (password.length < 4) {
+            return res.status(412).json({ "errorMessage": "패스워드 형식이 일치하지 않습니다." })
+        }
+        // 닉네임과 같은 값이 포함된 경우 회원가입에 실패로 만들기
+        if (password.includes(nickname)) {
+            return res.status(412).json({ "errorMessage": "패스워드에 닉네임이 포함되어 있습니다." })
+        }
+        // 비밀번호 확인은 비밀번호와 정확하게 일치하기
+        if (password !== confirm) {
+            return res.status(412).json({ "errorMessage": "패스워드가 일치하지 않습니다." })
+        }
+        // 데이터베이스에 존재하는 닉네임 중복등록 막기 
+        const isExistNickname = await Users.findOne({ where: { nickname } })
+        if (isExistNickname) {
+            return res.status(412).json({ "errorMessage": "중복된 닉네임입니다." })
+        }
+        // 조건 검토 끝 --------------------------------------------------------------------------
+    } catch {
+        // 예외 케이스에서 처리하지 못한 에러
+        return res.status(400).json({ "errorMessage": "요청한 데이터 형식이 올바르지 않습니다." })
+    }
+    // 회원 정보 테이블에 등록
+    const user = await Users.create({ nickname, password })
+    // 가입과 동시에 jwt 발행후 쿠키 전달
+    const token = jwt.sign({ userId: nickname }, "ghdwngur")
+    res.cookie("authorization", `Bearer ${token}`)
+    // 회원가입 완료 메세지와 201 상태 코드 전달
+    return res.status(201).json({ "message": "회원 가입에 성공하였습니다." })
 
 })
 
