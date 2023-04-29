@@ -1,11 +1,11 @@
-const express = require("express");
-const router = express.Router();
+const express = require("express")
+const indexRouter = express.Router()
 const usersRouter = require("./users")
 const postsRouter = require("./posts")
 const commentsRouter = require("./comments")
 
-router.get("/", (req, res) => {
-	res.send(`<!DOCTYPE html>
+indexRouter.get("/", (req, res) => {
+    res.send(`<!DOCTYPE html>
     <html>
     <head>
         <title>API index page</title>
@@ -14,6 +14,6 @@ router.get("/", (req, res) => {
         <h1>API index page</h1>
     </body>
     </html>`)
-});
+})
 
-module.exports = { router, usersRouter, postsRouter, commentsRouter };
+module.exports = { indexRouter, usersRouter, postsRouter, commentsRouter }

@@ -1,5 +1,6 @@
 const express = require("express")
 const cookieParser = require("cookie-parser")
+const { indexRouter, usersRouter, postsRouter, commentsRouter } = require("./routes")
 const app = express()
 const PORT = 3018
 
@@ -8,7 +9,7 @@ app.use(cookieParser())
 
 // request json parsing, route 사용
 app.use(express.json())
-//app.use('/api', [])
+app.use('/api', [indexRouter, usersRouter, postsRouter, commentsRouter])
 
 // 랜딩페이지 눈부심 방지
 app.get('/', (req, res) => {
