@@ -6,13 +6,13 @@ module.exports = (sequelize, DataTypes) => {
   class Posts extends Model {
     static associate(models) {
       // userId @ Users -||--|<- UserId @ Posts
-      this.belongsTo(Model.Users, {
+      this.belongsTo(models.Users, {
         targetKey: "userId",
         foreignKey: "UserId",
       })
 
       // postId @ Posts -||--|<- PostId @ Comments
-      this.hasMany(Model.Comments, {
+      this.hasMany(models.Comments, {
         sourceKey: "postId",
         foreignKey: "PostId",
       })
