@@ -1,10 +1,10 @@
 const express = require("express")
-const indexRouter = express.Router()
+const router = express.Router()
 const usersRouter = require("./users")
 const postsRouter = require("./posts")
 const commentsRouter = require("./comments")
 
-indexRouter.get("/", (req, res) => {
+router.get("/", (req, res) => {
     res.send(`<!DOCTYPE html>
     <html>
     <head>
@@ -16,4 +16,4 @@ indexRouter.get("/", (req, res) => {
     </html>`)
 })
 
-module.exports = { indexRouter, usersRouter, postsRouter, commentsRouter }
+module.exports = { indexRouter: router, usersRouter, postsRouter, commentsRouter }
