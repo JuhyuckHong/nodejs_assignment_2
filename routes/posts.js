@@ -9,10 +9,13 @@ const router = express.Router()
 router.get("/posts", async (req, res) => {
     try {
         const posts = await Posts.findAll({
-            attributes: ["postId", "userId", "title", "createdAt", "updatedAt"],
+            attributes: [
+                "postId", "userId", "title", "createdAt", "updatedAt",
+                [Sequelize.col("nickname"), "nickname"]
+            ],
             include: [{
                 model: Users,
-                attributes: ["nickname"]
+                attributes: []
             }],
             order: [['createdAt', 'DESC']]
         })
@@ -58,7 +61,7 @@ router.get("/posts/:postId", async (req, res) => {
                 "content",
                 "createdAt",
                 "updatedAt",
-                [Sequelize.col("User.nickname"), "nickname"]
+                [Sequelize.col("nickname"), "nickname"]
             ],
             include: [{
                 model: Users,
