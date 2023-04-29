@@ -27,7 +27,21 @@ router.get("/posts", async (req, res) => {
 // 2. 게시글 작성 API
 //     - 토큰을 검사하여, 유효한 토큰일 경우에만 게시글 작성 가능
 //     - 제목, 작성 내용을 입력하기
-router.post("/posts", auth, (req, res) => {
+router.post("/posts", auth, async (req, res) => {
+    const { userId } = res.locals.user
+    const { title, content } = req.body
+    
+    try {
+        if (!title || !content) {
+            return res.status(412).json({ "errorMessage": "데이터 형식이 올바르지 않습니다." })
+        } else {
+            const post = await Posts.create({ UserId: userId, title, content })
+            return res.status(201).json({ "message": "게시글 작성에 성공하였습니다." })
+        }
+    } catch (error) {
+        console.log({error})
+        return res.status(400).json({ "errorMessage": "게시글 작성에 실패하였습니다." })
+    }
 
 })
 
