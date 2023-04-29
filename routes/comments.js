@@ -3,6 +3,11 @@ const { Comments } = require("../models")
 const auth = require("../middlewares/auth-middleware")
 const router = express.Router()
 
+// 댓글 목록 조회
+router.get("/posts/:postId/comments", (req, res) => {
+
+})
+
 // 6. 댓글 작성 API
 //     - 로그인 토큰을 검사하여, 유효한 토큰일 경우에만 댓글 작성 가능
 //     - 댓글 내용을 비워둔 채 댓글 작성 API를 호출하면 "댓글 내용을 입력해주세요" 라는 메세지를 return하기
