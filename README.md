@@ -46,3 +46,6 @@ Second node.js assignment using...
 8. 댓글 삭제 API
     **- 로그인 토큰을 검사하여, 해당 사용자가 작성한 댓글만 삭제 가능**
     - 원하는 댓글을 삭제하기
+    
+### ERD
+![ERD](https://github.com/JuhyuckHong/nodejs_assignment_2/blob/main/erd.png)
