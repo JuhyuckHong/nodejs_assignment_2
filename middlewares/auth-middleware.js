@@ -24,13 +24,11 @@ module.exports = async (req, res, next) => {
             return res.status(401).json({ "errorMessage": "토큰 사용자 없음" })
         }
         // res.local에 user로 저장하고,
-        console.log(user.userId)
-        res.locals.user = user
+        res.local.userId = user.userId
         // next()로 다음 작업으로 넘겨줌
         next()
         // 위 단계 중 뭐 하나 잘못되면
-    } catch (error) {
-        console.log({error})
+    } catch {
         // 비정상 요청으로 간주, 401 상태 코드와 에러메시지 반환
         return res.status(401).json({ "errorMessage": "비정상 요청" })
     }
