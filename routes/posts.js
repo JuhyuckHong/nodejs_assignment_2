@@ -1,5 +1,5 @@
 const express = require("express")
-const { Users, Posts } = require("../models")
+const { Users, Posts, Sequelize } = require("../models")
 const auth = require("../middlewares/auth-middleware")
 const router = express.Router()
 
@@ -47,7 +47,31 @@ router.post("/posts", auth, async (req, res) => {
 // 3. 게시글 조회 API
 //     - 제목, 작성자명(nickname), 작성 날짜, 작성 내용을 조회하기 
 //     (검색 기능이 아닙니다. 간단한 게시글 조회만 구현해주세요.)
-router.get("/posts/:postId", (req, res) => {
+router.get("/posts/:postId", async (req, res) => {
+    const { postId } = req.params
+    try {
+        const post = await Posts.findOne({
+            attributes: [
+                "postId",
+                "UserId",
+                "title",
+                "content",
+                "createdAt",
+                "updatedAt",
+                [Sequelize.col("User.nickname"), "nickname"]
+            ],
+            include: [{
+                model: Users,
+                attributes: []
+            }],
+            where: { postId }
+        })
+        return res.status(200).json({ post })
+    } catch (error) {
+        console.log({ error })
+        return res.status(400).json({ "errorMessage": "게시글 조회에 실패하였습니다." })
+    }
+
 
 })
 
