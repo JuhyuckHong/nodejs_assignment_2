@@ -1,12 +1,26 @@
 const express = require("express")
-const { Posts } = require("../models")
+const { Users, Posts } = require("../models")
 const auth = require("../middlewares/auth-middleware")
 const router = express.Router()
 
 // 1. 전체 게시글 목록 조회 API
 //     - 제목, 작성자명(nickname), 작성 날짜를 조회하기
 //     - 작성 날짜 기준으로 내림차순 정렬하기
-router.get("/posts", (req, res) => {
+router.get("/posts", async (req, res) => {
+    try {
+        const posts = await Posts.findAll({
+            attributes: ["postId", "userId", "title", "createdAt", "updatedAt"],
+            include: [{
+                model: Users,
+                attributes: ["nickname"]
+            }],
+            order: [['createdAt', 'DESC']]
+        })
+        return res.status(200).json({ posts })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ "errorMessage": "게시글 조회에 실패하였습니다." })
+    }
 
 })
 
