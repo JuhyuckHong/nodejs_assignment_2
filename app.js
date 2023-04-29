@@ -8,7 +8,7 @@ app.use(cookieParser())
 
 // request json parsing, route 사용
 app.use(express.json())
-app.use('/api', [])
+//app.use('/api', [])
 
 // 랜딩페이지 눈부심 방지
 app.get('/', (req, res) => {
@@ -25,6 +25,6 @@ app.get('/', (req, res) => {
 });
 
 // 서버 실행
-app.listen(port, () => {
+app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT} now.`);
 });
