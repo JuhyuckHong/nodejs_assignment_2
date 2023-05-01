@@ -67,15 +67,74 @@ router.post("/posts/:postId/comments", auth, async (req, res) => {
 //     - 로그인 토큰을 검사하여, 해당 사용자가 작성한 댓글만 수정 가능
 //     - 댓글 내용을 비워둔 채 댓글 수정 API를 호출하면 "댓글 내용을 입력해주세요" 라는 메세지를 return하기
 //     - 댓글 내용을 입력하고 댓글 수정 API를 호출한 경우 작성한 댓글을 수정하기
-router.put("/posts/:postId/comments/:commentId", auth, (req, res) => {
+router.put("/posts/:postId/comments/:commentId", auth, async (req, res) => {
+    const { postId, commentId } = req.params
+    const { comment } = req.body
+    const { userId } = res.locals.user
 
+    const post = await Posts.findOne({ where: { postId } })
+    if (!post) {
+        return res.status(404).json({ "errorMessage": "게시글이 존재하지 않습니다." })
+    }
+
+    const thisComment = await Comments.findOne({ where: { commentId } })
+    if (!thisComment) {
+        return res.status(404).json({ "errorMessage": "댓글이 존재하지 않습니다." })
+    }
+    if (thisComment.UserId !== userId) {
+        return res.status(403).json({ "errorMessage": "댓글의 수정 권한이 존재하지 않습니다." })
+    }
+
+    if (!comment) {
+        return res.status(400).json({ message: "댓글 내용을 입력해주세요." })
+    }
+
+    try {
+        Comments.update({ comment }, { where: { commentId } })
+            .then(() => {
+                return res.status(201).json({ message: "댓글을 수정하였습니다." })
+            })
+            .catch(error => {
+                console.log(error)
+                return res.status(401).json({ "errorMessage": "댓글 수정이 정상적으로 처리되지 않았습니다." })
+            })
+    } catch (error) {
+        return res.status(400).json({ "errorMessage": "댓글 수정에 실패하였습니다." })
+    }
 })
 
 // 8. 댓글 삭제 API
 //     - 로그인 토큰을 검사하여, 해당 사용자가 작성한 댓글만 삭제 가능
 //     - 원하는 댓글을 삭제하기
-router.delete("/posts/:postId/comments/:commentId", auth, (req, res) => {
+router.delete("/posts/:postId/comments/:commentId", auth, async (req, res) => {
+    const { postId, commentId } = req.params
+    const { userId } = res.locals.user
 
+    const post = await Posts.findOne({ where: { postId } })
+    if (!post) {
+        return res.status(404).json({ "errorMessage": "게시글이 존재하지 않습니다." })
+    }
+
+    const thisComment = await Comments.findOne({ where: { commentId } })
+    if (!thisComment) {
+        return res.status(404).json({ "errorMessage": "댓글이 존재하지 않습니다." })
+    }
+    if (thisComment.UserId !== userId) {
+        return res.status(403).json({ "errorMessage": "댓글의 삭제 권한이 존재하지 않습니다." })
+    }
+
+    try {
+        Comments.destroy({ where: { commentId } })
+            .then(() => {
+                return res.status(201).json({ message: "댓글을 삭제하였습니다." })
+            })
+            .catch(error => {
+                console.log(error)
+                return res.status(401).json({ "errorMessage": "댓글 삭제가 정상적으로 처리되지 않았습니다." })
+            })
+    } catch (error) {
+        return res.status(400).json({ "errorMessage": "댓글 수정에 실패하였습니다." })
+    }
 })
 
 module.exports = router;
