@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "postId",
         foreignKey: "PostId",
       })
+      // uersId @ Users -||--|<- UserId @ Comments
+      this.belongsTo(models.Users, {
+        targetKey: "userId",
+        foreignKey: "UserId",
+      })
     }
   }
   Comments.init(
