@@ -2,7 +2,7 @@ const express = require("express")
 const cookieParser = require("cookie-parser")
 const { indexRouter, usersRouter, postsRouter, commentsRouter } = require("./routes")
 const app = express()
-const PORT = 3018
+const PORT = 3000
 
 // cookie-parser 사용
 app.use(cookieParser())
