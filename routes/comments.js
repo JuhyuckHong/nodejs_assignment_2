@@ -51,8 +51,7 @@ router.post("/posts/:postId/comments", auth, async (req, res) => {
         return res.status(404).json({ "errorMessage": "게시글이 존재하지 않습니다." })
     }
 
-    if (!(comment)) {
-        // 412, 데이터 형식 오류 메시지 반환
+    if (!comment) {
         return res.status(412).json({ message: "데이터 형식이 올바르지 않습니다." })
     }
 
