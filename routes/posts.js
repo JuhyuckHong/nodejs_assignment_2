@@ -81,7 +81,24 @@ router.get("/posts/:postId", async (req, res) => {
 // 4. 게시글 수정 API
 //     - 토큰을 검사하여, 해당 사용자가 작성한 게시글만 수정 가능
 router.put("/posts/:postId", auth, (req, res) => {
+    const { postId } = req.params
+    const { title, content } = req.body
 
+    try {
+        if (!title || !content) {
+            return res.status(412).json({ "errorMessage": "데이터 형식이 올바르지 않습니다." })
+        } else {
+            Posts.update({ title, content }, { where: { postId } }).then(_ => {
+                return res.status(201).json({ "message": "게시글 수정에 성공하였습니다." })
+            }).catch(error => {
+                console.log(error)
+                return res.status(401).json({ "errorMessage": "게시글이 정상적으로 수정되지 않았습니다." })
+            })
+        }
+    } catch (error) {
+        console.log({ error })
+        return res.status(400).json({ "errorMessage": "게시글 수정에 실패하였습니다." })
+    }
 })
 
 // 5. 게시글 삭제 API
