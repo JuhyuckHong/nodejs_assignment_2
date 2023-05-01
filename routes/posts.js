@@ -110,8 +110,29 @@ router.put("/posts/:postId", auth, async (req, res) => {
 
 // 5. 게시글 삭제 API
 //     - 토큰을 검사하여, 해당 사용자가 작성한 게시글만 삭제 가능
-router.delete("/posts/:postId", auth, (req, res) => {
+router.delete("/posts/:postId", auth, async (req, res) => {
+    const { postId } = req.params
+    const { userId } = res.locals.user
 
+    const post = await Posts.findOne({ where: { postId } })
+
+    if (!post) {
+        return res.status(404).json({ "errorMessage": "게시글이 존재하지 않습니다." })
+    } else if (post.UserId !== userId) {
+        return res.status(403).json({ "errorMessage": "게시글 삭제의 권한이 존재하지 않습니다." })
+    }
+
+    try {
+        Posts.destroy({ where: { postId } }).then(() => {
+            return res.status(201).json({ "message": "게시글을 삭제하였습니다." })
+        }).catch(error => {
+            console.log(error)
+            return res.status(401).json({ "errorMessage": "게시글이 정상적으로 삭제되지 않았습니다." })
+        })
+    } catch (error) {
+        console.log({ error })
+        return res.status(400).json({ "errorMessage": "게시글 삭제에 실패하였습니다." })
+    }
 })
 
 module.exports = router;
