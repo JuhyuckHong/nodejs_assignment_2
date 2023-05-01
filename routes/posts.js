@@ -80,15 +80,22 @@ router.get("/posts/:postId", async (req, res) => {
 
 // 4. 게시글 수정 API
 //     - 토큰을 검사하여, 해당 사용자가 작성한 게시글만 수정 가능
-router.put("/posts/:postId", auth, (req, res) => {
+router.put("/posts/:postId", auth, async (req, res) => {
     const { postId } = req.params
     const { title, content } = req.body
+    const { userId } = res.locals.user
+
+    const post = await Posts.findOne({ where: { postId } })
+
+    if (post.UserId !== userId) {
+        return res.status(403).json({ "errorMessage": "게시글 수정의 권한이 존재하지 않습니다." })
+    }
 
     try {
         if (!title || !content) {
             return res.status(412).json({ "errorMessage": "데이터 형식이 올바르지 않습니다." })
         } else {
-            Posts.update({ title, content }, { where: { postId } }).then(_ => {
+            Posts.update({ title, content }, { where: { postId } }).then(post => {
                 return res.status(201).json({ "message": "게시글 수정에 성공하였습니다." })
             }).catch(error => {
                 console.log(error)
