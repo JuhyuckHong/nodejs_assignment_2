@@ -6,7 +6,7 @@ const postController = new PostController();
 
 router.get('/posts', postController.getPosts);
 router.post('/posts', auth, postController.createPost);
-router.get('/posts/:postId', postController.findOneDetail);
+router.get('/posts/:postId', postController.findPostDetail);
 router.put('/posts/:postId', auth, postController.updatePost);
 router.delete('/posts/:postId', auth, postController.deletePost);
 

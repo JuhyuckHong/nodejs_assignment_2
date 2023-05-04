@@ -41,10 +41,10 @@ class PostsController {
         }
     };
 
-    findOneDetail = async (req, res, next) => {
+    findPostDetail = async (req, res, next) => {
         const { postId } = req.params;
         try {
-            const post = await this.postService.findOneDetail(postId);
+            const post = await this.postService.findPostDetail(postId);
             return res.status(200).json({ post });
         } catch {
             return res.status(400).json({
@@ -59,7 +59,7 @@ class PostsController {
         const { userId } = res.locals.user;
 
         try {
-            const post = this.postService.findOne(postId);
+            const post = this.postService.findOnePost(postId);
 
             if (post.UserId !== userId) {
                 return res.status(403).json({
@@ -101,7 +101,7 @@ class PostsController {
         const { postId } = req.params;
         const { userId } = res.locals.user;
         try {
-            const post = this.postService.findOne(postId);
+            const post = this.postService.findOnePost(postId);
             if (!post) {
                 return res
                     .status(404)

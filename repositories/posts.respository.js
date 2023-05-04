@@ -1,7 +1,7 @@
 const { Users, Posts, Sequelize } = require('../models');
 
 class PostRepository {
-    findOne = async (postId) => {
+    findOnePost = async (postId) => {
         const post = await Posts.findOne({ where: { postId } });
 
         return post;
@@ -39,7 +39,7 @@ class PostRepository {
         return createPostData;
     };
 
-    findOneDetail = async (postId) => {
+    findPostDetail = async (postId) => {
         const post = await Posts.findOne({
             attributes: [
                 'postId',

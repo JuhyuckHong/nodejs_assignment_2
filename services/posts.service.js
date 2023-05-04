@@ -3,8 +3,8 @@ const PostRepository = require('../repositories/posts.respository');
 class PostService {
     postRepository = new PostRepository();
 
-    findOne = async (postId) => {
-        const post = await this.postRepository.findOne(postId);
+    findOnePost = async (postId) => {
+        const post = await this.postRepository.findOnePost(postId);
         return post;
     };
 
@@ -31,8 +31,8 @@ class PostService {
         return createdPostData;
     };
 
-    findOneDetail = async (postId) => {
-        const post = await this.postRepository.findOneDetail(postId);
+    findPostDetail = async (postId) => {
+        const post = await this.postRepository.findPostDetail(postId);
         return post;
     };
 
