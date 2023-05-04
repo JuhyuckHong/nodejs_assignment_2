@@ -15,28 +15,24 @@ router.get('/posts/:postId/comments', async (req, res) => {
     }
 
     try {
-        const comments = await Comments.findAll(
-            {
-                attributes: [
-                    'commentId',
-                    'UserId',
-                    [Sequelize.col('nickname'), 'nickname'],
-                    'comment',
-                    'createdAt',
-                    'updatedAt',
-                ],
-                include: [
-                    {
-                        model: Users,
-                        attributes: [],
-                    },
-                ],
-                order: [['createdAt', 'DESC']],
-            },
-            {
-                where: { PostId: postId },
-            }
-        );
+        const comments = await Comments.findAll({
+            attributes: [
+                'commentId',
+                'UserId',
+                [Sequelize.col('nickname'), 'nickname'],
+                'comment',
+                'createdAt',
+                'updatedAt',
+            ],
+            include: [
+                {
+                    model: Users,
+                    attributes: [],
+                },
+            ],
+            order: [['createdAt', 'DESC']],
+            where: { postId },
+        });
         return res.status(200).json({ comments });
     } catch (error) {
         console.log(error);
