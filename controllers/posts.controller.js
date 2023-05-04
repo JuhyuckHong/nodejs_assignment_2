@@ -26,11 +26,7 @@ class PostsController {
         }
 
         try {
-            const createdPostData = this.postService.createPost(
-                userId,
-                title,
-                content
-            );
+            this.postService.createPost(userId, title, content);
             return res
                 .status(201)
                 .json({ message: '게시글 작성에 성공하였습니다.' });
