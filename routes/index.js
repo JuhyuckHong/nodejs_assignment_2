@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const usersRouter = require('./users');
 const postsRouter = require('./posts.route');
-const commentsRouter = require('./comments');
+const commentsRouter = require('./comments.route');
 
 router.get('/', (req, res) => {
     res.send(`<!DOCTYPE html>
