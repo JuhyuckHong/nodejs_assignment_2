@@ -4,50 +4,27 @@ class PostService {
     postRepository = new PostRepository();
 
     findOnePost = async (postId) => {
-        const post = await this.postRepository.findOnePost(postId);
-        return post;
+        return await this.postRepository.findOnePost(postId);
     };
 
     findAllPost = async () => {
-        const allPost = await this.postRepository.findAllPost();
-        return allPost.map((post) => {
-            return {
-                postId: post.postId,
-                UserId: post.UserId,
-                title: post.title,
-                createdAt: post.createdAt,
-                updatedAt: post.updatedAt,
-                nickname: post.nickname,
-            };
-        });
+        return await this.postRepository.findAllPost();
     };
 
     createPost = async (userId, title, content) => {
-        const createdPostData = await this.postRepository.createPost(
-            userId,
-            title,
-            content
-        );
-        return createdPostData;
+        return await this.postRepository.createPost(userId, title, content);
     };
 
     findPostDetail = async (postId) => {
-        const post = await this.postRepository.findPostDetail(postId);
-        return post;
+        return await this.postRepository.findPostDetail(postId);
     };
 
     updatePost = async (postId, title, content) => {
-        const updatedPostData = this.postRepository.updatePost(
-            postId,
-            title,
-            content
-        );
-        return updatedPostData;
+        return this.postRepository.updatePost(postId, title, content);
     };
 
     deletePost = async (postId) => {
-        const deletePostResult = await this.postRepository.deletePost(postId);
-        return deletePostResult;
+        return await this.postRepository.deletePost(postId);
     };
 }
 

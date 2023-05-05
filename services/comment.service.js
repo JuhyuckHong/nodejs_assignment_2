@@ -4,36 +4,23 @@ class CommentService {
     commentRepository = new CommentRepository();
 
     findOneComment = async (commentId) => {
-        const comment = await this.commentRepository.findOneComment(commentId);
-        return comment;
+        return await this.commentRepository.findOneComment(commentId);
     };
 
     findAllComments = async (postId) => {
-        const comments = await this.commentRepository.findAllComments(postId);
-        return comments;
+        return await this.commentRepository.findAllComments(postId);
     };
 
     createComment = async (postId, userId, comment) => {
-        const createdCommentData = this.commentRepository.createComment(
-            postId,
-            userId,
-            comment
-        );
-        return createdCommentData;
+        return this.commentRepository.createComment(postId, userId, comment);
     };
 
     updateComment = async (commentId, comment) => {
-        const updatedCommentData = this.commentRepository.updateComment(
-            commentId,
-            comment
-        );
-        return updatedCommentData;
+        return this.commentRepository.updateComment(commentId, comment);
     };
 
     deleteComment = async (commentId) => {
-        const deletedCommentData =
-            this.commentRepository.deleteComment(commentId);
-        return deletedCommentData;
+        return this.commentRepository.deleteComment(commentId);
     };
 }
 

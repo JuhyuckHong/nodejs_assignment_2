@@ -5,61 +5,35 @@ class UserService {
     userRepository = new UserRepository();
 
     findOneUser = async (nickname) => {
-        const user = await this.userRepository.findOneUser(nickname);
-        return user;
+        return await this.userRepository.findOneUser(nickname);
     };
 
     createUser = async (nickname, password) => {
-        const user = await this.userRepository.createUser(nickname, password);
-        return user;
+        return await this.userRepository.createUser(nickname, password);
     };
 
     nicknameCheck = (nickname) => {
-        console.log(nickname)
-        const regex = /^[a-zA-Z0-9]+$/;
-        if (nickname.length < 3 || !regex.test(nickname)) {
-            return true;
-        } else {
-            return false;
-        }
+        return nickname.length < 3 || !/^[a-zA-Z0-9]+$/.test(nickname);
     };
 
     pwLenghtCheck = (password) => {
-        if (password.length < 4) {
-            return ture;
-        } else {
-            return false;
-        }
+        return password.length < 4;
     };
 
     pwIncludeNicknameCheck = (nickname, password) => {
-        if (password.includes(nickname)) {
-            return true;
-        } else {
-            return false;
-        }
+        return password.includes(nickname);
     };
 
     pwConfirm = (password, confirm) => {
-        if (password !== confirm) {
-            return true;
-        } else {
-            return false;
-        }
+        return password !== confirm;
     };
 
     isExistNickname = async (nickname) => {
-        const user = await this.findOneUser(nickname);
-        if (user) {
-            return true;
-        } else {
-            return false;
-        }
+        return Boolean(await this.findOneUser(nickname));
     };
 
     grantToken = (userId) => {
-        const token = jwt.sign({ userId }, 'ghdwngur');
-        return token;
+        return jwt.sign({ userId }, 'ghdwngur');
     };
 }
 
