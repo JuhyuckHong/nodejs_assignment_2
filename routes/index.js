@@ -3,6 +3,7 @@ const router = express.Router();
 const usersRouter = require('./users.route');
 const postsRouter = require('./posts.route');
 const commentsRouter = require('./comments.route');
+const likesRouter = require('./likes.route')
 
 router.get('/', (req, res) => {
     res.send(`<!DOCTYPE html>
@@ -21,4 +22,5 @@ module.exports = {
     usersRouter,
     postsRouter,
     commentsRouter,
+    likesRouter,
 };

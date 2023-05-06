@@ -5,6 +5,7 @@ const {
     usersRouter,
     postsRouter,
     commentsRouter,
+    likesRouter,
 } = require('./routes');
 const app = express();
 const PORT = 3000;
@@ -14,7 +15,13 @@ app.use(cookieParser());
 
 // request json parsing, route 사용
 app.use(express.json());
-app.use('/api', [indexRouter, usersRouter, postsRouter, commentsRouter]);
+app.use('/api', [
+    indexRouter,
+    usersRouter,
+    postsRouter,
+    commentsRouter,
+    likesRouter,
+]);
 
 // 랜딩페이지 눈부심 방지
 app.get('/', (req, res) => {
