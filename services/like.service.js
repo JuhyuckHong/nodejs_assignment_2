@@ -1,7 +1,9 @@
 const LikeRepository = require('../repositories/like.repository')
+const PostService = require('./posts.service')
 
 class LikeService {
     likeRepository = new LikeRepository()
+    postService = new PostService()
 
     findLikeExist = async (postId, userId) => {
         return await this.likeRepository.findLike(postId, userId)
@@ -16,11 +18,12 @@ class LikeService {
     }
 
     findAllLikedPosts = async (userId) => {
-        const likeAllPosts = this.likeRepository.findAllLikedPosts(userId)
-        console.log(likeAllPosts)
-        // count likes
+        const likeAllPosts = await this.likeRepository.findAllLikedPosts(userId)
+        const postIds = likeAllPosts.map((val) => val.PostId)
+        const posts = await this.postService.findSomePosts(postIds)
+        console.log(posts)
         // sorting
-        return likeAllPosts
+        return posts
     }
 }
 

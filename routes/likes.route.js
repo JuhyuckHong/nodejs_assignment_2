@@ -5,6 +5,6 @@ const LikeController = require('../controllers/like.controller')
 const likeController = new LikeController
 
 router.put('/posts/:postId/like', auth, likeController.toggleLike);
-router.get('/posts/like', auth, likeController.findAllLikedPosts);
+router.get('/posts/like/list', auth, likeController.findAllLikedPosts);
 
 module.exports = router;

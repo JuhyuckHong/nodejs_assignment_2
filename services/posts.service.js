@@ -7,6 +7,10 @@ class PostService {
         return await this.postRepository.findOnePost(postId);
     };
 
+    findSomePosts = async (postIds) => {
+        return await this.postRepository.findSomePosts(postIds);
+    };
+
     findAllPost = async () => {
         return await this.postRepository.findAllPost();
     };

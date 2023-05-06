@@ -28,11 +28,11 @@ class LikeRepository {
 
     findAllLikedPosts = async (userId) => {
         const likedPosts = await Likes.findAll({
-            attribute: ['UserId', 'PostId'],
-            include: [{ model: Posts, attribute: [] }],
+            attributes: ['PostId'],
+            include: [{ model: Posts, attributes: [] }],
+            raw: true,
             where: { UserId: userId },
         });
-        console.log(likedPosts);
         return likedPosts;
     };
 }

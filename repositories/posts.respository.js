@@ -7,6 +7,10 @@ class PostRepository {
         return post;
     };
 
+    findSomePosts = async (postIds) => {
+        return await Posts.findAll({ where: { postId: postIds } });
+    };
+
     findAllPost = async () => {
         const posts = await Posts.findAll({
             attributes: [
