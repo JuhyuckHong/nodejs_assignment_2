@@ -1,5 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
+const Sequelize = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
     class Likes extends Model {
         static associate(models) {
@@ -17,8 +19,30 @@ module.exports = (sequelize, DataTypes) => {
     }
     Likes.init(
         {
-            userId: DataTypes.INTEGER,
-            postId: DataTypes.INTEGER,
+            likeId: {
+                allowNull: false,
+                primaryKey: true,
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.UUIDV4,
+            },
+            UserId: {
+                allowNull: false,
+                type: DataTypes.INTEGER,
+                references: {
+                    model: 'Users',
+                    key: 'userId',
+                },
+                onDelete: 'CASCADE',
+            },
+            PostId: {
+                allowNull: false,
+                type: DataTypes.INTEGER,
+                references: {
+                    model: 'Posts',
+                    key: 'postId',
+                },
+                onDelete: 'CASCADE',
+            },
         },
         {
             sequelize,
