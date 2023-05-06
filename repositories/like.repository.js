@@ -10,6 +10,13 @@ class LikeRepository {
         });
     };
 
+    findByPost = async (postId) => {
+        const users = await Likes.findAll({
+            where: { PostId: postId },
+        });
+        return users.length
+    };
+
     createLike = async (postId, userId) => {
         return await Likes.create({
             UserId: userId,

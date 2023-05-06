@@ -17,6 +17,10 @@ class LikeService {
         return await this.likeRepository.deleteLike(postId, userId)
     }
 
+    findByPost = async (postId) => {
+        return await this.likeRepository.findByPost(postId)
+    }
+
     findAllLikedPosts = async (userId) => {
         const likeAllPosts = await this.likeRepository.findAllLikedPosts(userId)
         const postIds = likeAllPosts.map((val) => val.PostId)
