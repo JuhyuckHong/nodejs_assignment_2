@@ -8,9 +8,13 @@ module.exports = (sequelize, DataTypes) => {
                 targetKey: 'userId',
                 foreignKey: 'UserId',
             });
-
             // postId @ Posts -||--|<- PostId @ Comments
             this.hasMany(models.Comments, {
+                sourceKey: 'postId',
+                foreignKey: 'PostId',
+            });
+            // postId @ Posts -||--|<- PostId @ Likes
+            this.hasMany(models.Likes, {
                 sourceKey: 'postId',
                 foreignKey: 'PostId',
             });
