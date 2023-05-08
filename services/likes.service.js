@@ -9,7 +9,7 @@ class LikesService {
         try {
             return await this.likesRepository.findLike(postId, userId);
         } catch (err) {
-            console.error({ err });
+            console.error(err.message);
             throw new Error('likes.service > findLikeExist');
         }
     };
@@ -18,7 +18,7 @@ class LikesService {
         try {
             return await this.likesRepository.createLike(postId, userId);
         } catch (err) {
-            console.error({ err });
+            console.error(err.message);
             throw new Error('likes.service > createLike');
         }
     };
@@ -27,7 +27,7 @@ class LikesService {
         try {
             return await this.likesRepository.deleteLike(postId, userId);
         } catch (err) {
-            console.error({ err });
+            console.error(err.message);
             throw new Error('likes.service > deleteLike');
         }
     };
@@ -36,7 +36,7 @@ class LikesService {
         try {
             return await this.likesRepository.findByPost(postId);
         } catch (err) {
-            console.error({ err });
+            console.error(err.message);
             throw new Error('likes.service > findByPost');
         }
     };
@@ -50,7 +50,7 @@ class LikesService {
             const posts = await this.postsService.findSomePosts(postIds);
             return posts;
         } catch (err) {
-            console.error({ err });
+            console.error(err.message);
             throw new Error('likes.service > findAllLikedPosts');
         }
     };
