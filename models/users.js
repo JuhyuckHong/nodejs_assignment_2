@@ -23,12 +23,14 @@ module.exports = (sequelize, DataTypes) => {
 
     Users.init(
         {
+            // PK
             userId: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: DataTypes.INTEGER,
             },
+            // unique
             nickname: {
                 allowNull: false,
                 type: DataTypes.STRING,

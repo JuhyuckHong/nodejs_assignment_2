@@ -17,12 +17,14 @@ module.exports = (sequelize, DataTypes) => {
     }
     Comments.init(
         {
+            // PK
             commentId: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: DataTypes.INTEGER,
             },
+            // FK from Users
             UserId: {
                 allowNull: false,
                 type: DataTypes.INTEGER,
@@ -32,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 onDelete: 'CASCADE',
             },
+            // FK from Posts
             PostId: {
                 allowNull: false,
                 type: DataTypes.INTEGER,

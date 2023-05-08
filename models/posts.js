@@ -23,12 +23,14 @@ module.exports = (sequelize, DataTypes) => {
 
     Posts.init(
         {
+            // PK
             postId: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: DataTypes.INTEGER,
             },
+            // FK from Users
             UserId: {
                 allowNull: false,
                 type: DataTypes.INTEGER,

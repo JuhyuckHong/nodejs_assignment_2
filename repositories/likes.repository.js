@@ -1,6 +1,7 @@
 const { Posts, Likes } = require('../models');
 
 class LikesRepository {
+    // DB에서 userId가 postId에 like한 자료가 있는지 확인
     findLike = async (postId, userId) => {
         try {
             return await Likes.findOne({
@@ -15,6 +16,7 @@ class LikesRepository {
         }
     };
 
+    // postId에 like한 자료의 개수(=like 수) 찾기
     findByPost = async (postId) => {
         try {
             const users = await Likes.findAll({
@@ -27,6 +29,7 @@ class LikesRepository {
         }
     };
 
+    // like 생성
     createLike = async (postId, userId) => {
         try {
             return await Likes.create({
@@ -39,6 +42,7 @@ class LikesRepository {
         }
     };
 
+    // like 삭제
     deleteLike = async (postId, userId) => {
         try {
             return await Likes.destroy({
@@ -53,6 +57,7 @@ class LikesRepository {
         }
     };
 
+    // like한 모든 postId 찾기
     findAllLikedPosts = async (userId) => {
         try {
             return await Likes.findAll({
@@ -68,4 +73,5 @@ class LikesRepository {
     };
 }
 
+// export like repository 
 module.exports = LikesRepository;

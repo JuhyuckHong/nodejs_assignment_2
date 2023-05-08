@@ -2,9 +2,12 @@ const PostsRepository = require('../repositories/posts.respository');
 const LikesRepository = require('../repositories/likes.repository');
 
 class PostsService {
+    // 게시글 repository 객체 선언
     postsRepository = new PostsRepository();
+    // 좋아요 repository 객체 선언
     likesRepository = new LikesRepository();
 
+    // 조회한 내용에 좋아요 데이터 추가
     addLikes = async (posts) => {
         try {
             const postsLikesAdded = [];
@@ -22,6 +25,7 @@ class PostsService {
         }
     };
 
+    // 특정 게시글 찾기
     findOnePost = async (postId) => {
         try {
             return await this.postsRepository.findOnePost(postId);
@@ -31,9 +35,11 @@ class PostsService {
         }
     };
 
+    // 특정 게시글 여러개 찾기
     findSomePosts = async (postIds) => {
         try {
             const posts = await this.postsRepository.findSomePosts(postIds);
+            // 좋아요 정보 추가해서 반환
             return this.addLikes(posts);
         } catch (err) {
             console.error(err.message);
@@ -41,9 +47,11 @@ class PostsService {
         }
     };
 
+    // 전체 게시글 찾기
     findAllPost = async () => {
         try {
             const posts = await this.postsRepository.findAllPost();
+            // 좋아요 정보 추가해서 반환
             return this.addLikes(posts);
         } catch (err) {
             console.error(err.message);
@@ -51,6 +59,7 @@ class PostsService {
         }
     };
 
+    // 게시글 생성
     createPost = async (userId, title, content) => {
         try {
             return await this.postsRepository.createPost(
@@ -64,6 +73,7 @@ class PostsService {
         }
     };
 
+    // 게시글 세부내용 조회
     findPostDetail = async (postId) => {
         try {
             const post = await this.postsRepository.findPostDetail(postId);
@@ -77,6 +87,7 @@ class PostsService {
         }
     };
 
+    // 게시글 수정
     updatePost = async (postId, title, content) => {
         try {
             return this.postsRepository.updatePost(postId, title, content);
@@ -86,6 +97,7 @@ class PostsService {
         }
     };
 
+    // 게시글 삭제
     deletePost = async (postId) => {
         try {
             return await this.postsRepository.deletePost(postId);
@@ -96,4 +108,5 @@ class PostsService {
     };
 }
 
+// 게시글 서비스 export
 module.exports = PostsService;

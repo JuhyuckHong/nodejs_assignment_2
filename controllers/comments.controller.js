@@ -2,7 +2,9 @@ const CommentsService = require('../services/comments.service');
 const PostsService = require('../services/posts.service');
 
 class CommentsController {
+    // 댓글 서비스 객체 선언
     commentsService = new CommentsService();
+    // 게시글 서비스 객체 선언
     postsService = new PostsService();
 
     // postId 게시글의 댓글 반환 컨트롤러

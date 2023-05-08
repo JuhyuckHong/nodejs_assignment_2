@@ -2,9 +2,12 @@ const LikesRepository = require('../repositories/likes.repository');
 const PostsService = require('./posts.service');
 
 class LikesService {
+    // 좋아요 repository 객체 선언
     likesRepository = new LikesRepository();
+    // 게시글 repository 객체 선언
     postsService = new PostsService();
 
+    // 좋아요 있는지 확인
     findLikeExist = async (postId, userId) => {
         try {
             return await this.likesRepository.findLike(postId, userId);
@@ -14,6 +17,7 @@ class LikesService {
         }
     };
 
+    // 좋아요 만들기
     createLike = async (postId, userId) => {
         try {
             return await this.likesRepository.createLike(postId, userId);
@@ -23,6 +27,7 @@ class LikesService {
         }
     };
 
+    // 좋아요 삭제
     deleteLike = async (postId, userId) => {
         try {
             return await this.likesRepository.deleteLike(postId, userId);
@@ -32,6 +37,7 @@ class LikesService {
         }
     };
 
+    // 특정 게시글에 좋아요 찾기
     findByPost = async (postId) => {
         try {
             return await this.likesRepository.findByPost(postId);
@@ -41,6 +47,7 @@ class LikesService {
         }
     };
 
+    // 좋아요한 게시글 모두 찾기
     findAllLikedPosts = async (userId) => {
         try {
             const likeAllPosts = await this.likesRepository.findAllLikedPosts(
@@ -56,4 +63,5 @@ class LikesService {
     };
 }
 
+// 게시글 서비스 export
 module.exports = LikesService;

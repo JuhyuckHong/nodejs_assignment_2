@@ -19,12 +19,14 @@ module.exports = (sequelize, DataTypes) => {
     }
     Likes.init(
         {
+            // uuid PK
             likeId: {
                 allowNull: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.UUIDV4,
             },
+            // FK from Users
             UserId: {
                 allowNull: false,
                 type: DataTypes.INTEGER,
@@ -34,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 onDelete: 'CASCADE',
             },
+            // FK from Posts
             PostId: {
                 allowNull: false,
                 type: DataTypes.INTEGER,
@@ -47,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: 'Likes',
+            // no use createdAt, updatedAt 
             timestamps: false,
         }
     );

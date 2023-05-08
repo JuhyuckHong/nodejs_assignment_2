@@ -1,6 +1,7 @@
 const { Users, Comments, Sequelize } = require('../models');
 
 class CommentsRepository {
+    // DB에서 특정 댓글 한개 찾기
     findOneComment = async (commentId) => {
         try {
             return await Comments.findOne({ where: { commentId } });
@@ -10,6 +11,7 @@ class CommentsRepository {
         }
     };
 
+    // DB에서 특정 게시글의 전체 댓글 찾기
     findAllComments = async (postId) => {
         try {
             const comments = await Comments.findAll({
@@ -37,6 +39,7 @@ class CommentsRepository {
         }
     };
 
+    // 특정 게시글의 특정 댓글 찾기
     createComment = async (postId, userId, comment) => {
         try {
             return await Comments.create({
@@ -50,6 +53,7 @@ class CommentsRepository {
         }
     };
 
+    // 특정 댓글 업데이트 하기
     updateComment = async (commentId, comment) => {
         try {
             return await Comments.update({ comment }, { where: { commentId } });
@@ -59,6 +63,7 @@ class CommentsRepository {
         }
     };
 
+    // 특정 댓글 지우기
     deleteComment = async (commentId) => {
         try {
             return await Comments.destroy({
@@ -71,4 +76,5 @@ class CommentsRepository {
     };
 }
 
+// 댓글 repository export
 module.exports = CommentsRepository;
