@@ -1,8 +1,8 @@
-const CommentService = require('../services/comment.service');
+const CommentsService = require('../services/comments.service');
 const PostService = require('../services/posts.service');
 
-class CommentController {
-    commentService = new CommentService();
+class CommentsController {
+    commentsService = new CommentsService();
     postService = new PostService();
 
     getComments = async (req, res, next) => {
@@ -17,7 +17,7 @@ class CommentController {
         }
 
         try {
-            const comments = await this.commentService.findAllComments(postId);
+            const comments = await this.commentsService.findAllComments(postId);
             return res.status(200).json({ comments });
         } catch (error) {
             console.log(error);
@@ -46,7 +46,7 @@ class CommentController {
         }
 
         try {
-            await this.commentService.createComment(userId, postId, comment);
+            await this.commentsService.createComment(userId, postId, comment);
             return res.status(201).json({ message: '댓글을 작성하였습니다.' });
         } catch {
             return res
@@ -67,7 +67,7 @@ class CommentController {
                 .json({ errorMessage: '게시글이 존재하지 않습니다.' });
         }
 
-        const thisComment = await this.commentService.findOneComment(commentId);
+        const thisComment = await this.commentsService.findOneComment(commentId);
         if (!thisComment) {
             return res
                 .status(404)
@@ -86,7 +86,7 @@ class CommentController {
         }
 
         try {
-            this.commentService
+            this.commentsService
                 .updateComment(commentId, comment)
                 .then(() => {
                     return res
@@ -111,14 +111,14 @@ class CommentController {
         const { postId, commentId } = req.params;
         const { userId } = res.locals.user;
 
-        const post = await this.commentService.findOneComment(commentId);
+        const post = await this.commentsService.findOneComment(commentId);
         if (!post) {
             return res
                 .status(404)
                 .json({ errorMessage: '게시글이 존재하지 않습니다.' });
         }
 
-        const thisComment = await this.commentService.findOneComment(commentId);
+        const thisComment = await this.commentsService.findOneComment(commentId);
         if (!thisComment) {
             return res
                 .status(404)
@@ -131,7 +131,7 @@ class CommentController {
         }
 
         try {
-            this.commentService
+            this.commentsService
                 .destroyComment(commentId)
                 .then(() => {
                     return res
@@ -153,4 +153,4 @@ class CommentController {
     };
 }
 
-module.exports = CommentController
+module.exports = CommentsController

@@ -1,6 +1,6 @@
 const { Users, Comments, Sequelize } = require('../models');
 
-class CommentRepository {
+class CommentsRepository {
     findOneComment = async (commentId) => {
         try {
             return await Comments.findOne({ where: { commentId } });
@@ -71,4 +71,4 @@ class CommentRepository {
     };
 }
 
-module.exports = CommentRepository;
+module.exports = CommentsRepository;

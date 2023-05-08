@@ -1,11 +1,11 @@
-const CommentRepository = require('../repositories/comment.repository');
+const CommentsRepository = require('../repositories/comments.repository');
 
-class CommentService {
-    commentRepository = new CommentRepository();
+class CommentsService {
+    commentsRepository = new CommentsRepository();
 
     findOneComment = async (commentId) => {
         try {
-            return await this.commentRepository.findOneComment(commentId);
+            return await this.commentsRepository.findOneComment(commentId);
         } catch (err) {
             console.error({ err });
             throw new Error('comment.service > findOneComment');
@@ -14,7 +14,7 @@ class CommentService {
 
     findAllComments = async (postId) => {
         try {
-            return await this.commentRepository.findAllComments(postId);
+            return await this.commentsRepository.findAllComments(postId);
         } catch (err) {
             console.error({ err });
             throw new Error('comment.service > findAllComments');
@@ -23,7 +23,7 @@ class CommentService {
 
     createComment = async (postId, userId, comment) => {
         try {
-            return this.commentRepository.createComment(
+            return this.commentsRepository.createComment(
                 postId,
                 userId,
                 comment
@@ -36,7 +36,7 @@ class CommentService {
 
     updateComment = async (commentId, comment) => {
         try {
-            return this.commentRepository.updateComment(commentId, comment);
+            return this.commentsRepository.updateComment(commentId, comment);
         } catch (err) {
             console.error({ err });
             throw new Error('comment.service > updateComment');
@@ -45,7 +45,7 @@ class CommentService {
 
     deleteComment = async (commentId) => {
         try {
-            return this.commentRepository.deleteComment(commentId);
+            return this.commentsRepository.deleteComment(commentId);
         } catch (err) {
             console.error({ err });
             throw new Error('comment.service > deleteComment');
@@ -53,4 +53,4 @@ class CommentService {
     };
 }
 
-module.exports = CommentService;
+module.exports = CommentsService;
