@@ -29,7 +29,7 @@ module.exports = async (req, res, next) => {
         next();
         // 위 단계 중 뭐 하나 잘못되면
     } catch (error) {
-        console.log({ error });
+        console.error({ error });
         // 비정상 요청으로 간주, 401 상태 코드와 에러메시지 반환
         return res.status(401).json({ errorMessage: '비정상 요청' });
     }

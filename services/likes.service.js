@@ -2,8 +2,8 @@ const LikesRepository = require('../repositories/likes.repository');
 const PostsService = require('./posts.service');
 
 class LikesService {
-    likeRepository = new LikesRepository();
-    postService = new PostsService();
+    likesRepository = new LikesRepository();
+    postsService = new PostsService();
 
     findLikeExist = async (postId, userId) => {
         return await this.likesRepository.findLike(postId, userId);
