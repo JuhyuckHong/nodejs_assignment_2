@@ -7,7 +7,7 @@ class PostService {
     likeRepository = new LikeRepository();
 
     findOnePost = async (postId) => {
-        return post = await this.postRepository.findOnePost(postId);
+        return await this.postRepository.findOnePost(postId);
     };
 
     findSomePosts = async (postIds) => {
