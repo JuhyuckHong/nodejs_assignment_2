@@ -10,7 +10,7 @@ class LikesRepository {
                 },
             });
         } catch (err) {
-            console.error({ err });
+            console.error(err.message);
             throw new Error('likes.repository > findLike');
         }
     };
@@ -22,7 +22,7 @@ class LikesRepository {
             });
             return users.length;
         } catch (err) {
-            console.error({ err });
+            console.error(err.message);
             throw new Error('likes.repository > findByPost');
         }
     };
@@ -34,7 +34,7 @@ class LikesRepository {
                 PostId: postId,
             });
         } catch (err) {
-            console.error({ err });
+            console.error(err.message);
             throw new Error('likes.repository > createLike');
         }
     };
@@ -48,7 +48,7 @@ class LikesRepository {
                 },
             });
         } catch (err) {
-            console.error({ err });
+            console.error(err.message);
             throw new Error('likes.repository > deleteLike');
         }
     };
@@ -62,7 +62,7 @@ class LikesRepository {
                 where: { UserId: userId },
             });
         } catch (err) {
-            console.error({ err });
+            console.error(err.message);
             throw new Error('likes.repository > findAllLikedPosts');
         }
     };
