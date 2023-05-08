@@ -5,6 +5,9 @@ const postsRouter = require('./posts.route');
 const commentsRouter = require('./comments.route');
 const likesRouter = require('./likes.route')
 
+router.use('/posts', [postsRouter, commentsRouter, likesRouter])
+router.use('/', usersRouter)
+
 router.get('/', (req, res) => {
     res.send(`<!DOCTYPE html>
     <html>
@@ -17,10 +20,4 @@ router.get('/', (req, res) => {
     </html>`);
 });
 
-module.exports = {
-    indexRouter: router,
-    usersRouter,
-    postsRouter,
-    commentsRouter,
-    likesRouter,
-};
+module.exports = router

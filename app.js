@@ -1,12 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const {
-    indexRouter,
-    usersRouter,
-    postsRouter,
-    commentsRouter,
-    likesRouter,
-} = require('./routes');
+const router = require('./routes');
 const app = express();
 const PORT = 3000;
 
@@ -15,13 +9,7 @@ app.use(cookieParser());
 
 // request json parsing, route 사용
 app.use(express.json());
-app.use('/api', [
-    indexRouter,
-    usersRouter,
-    postsRouter,
-    commentsRouter,
-    likesRouter,
-]);
+app.use('/api', router);
 
 // 랜딩페이지 눈부심 방지
 app.get('/', (req, res) => {
