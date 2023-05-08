@@ -47,7 +47,11 @@ class LikesController {
             const allLikedPosts = await this.likesService.findAllLikedPosts(
                 userId
             );
-            return res.status(200).json({ posts: allLikedPosts });
+            return res
+                .status(200)
+                .json({
+                    posts: allLikedPosts.sort((a, b) => b.likes - a.likes),
+                });
         } catch (error) {
             console.log(error);
             return res

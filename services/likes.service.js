@@ -27,8 +27,6 @@ class LikesService {
         );
         const postIds = likeAllPosts.map((val) => val.PostId);
         const posts = await this.postsService.findSomePosts(postIds);
-        console.log(posts);
-        // sorting
         return posts;
     };
 }

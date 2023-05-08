@@ -5,26 +5,30 @@ class PostsService {
     postsRepository = new PostsRepository();
     likesRepository = new LikesRepository();
 
+    addLikes = async (posts) => {
+        const postsLikesAdded = []
+        for (const post of posts) {
+            const likes = await this.likesRepository.findByPost(
+                post.dataValues.postId
+            )
+            post.dataValues.likes = likes
+            postsLikesAdded.push(post.dataValues)
+        }
+        return postsLikesAdded
+    }
+
     findOnePost = async (postId) => {
         return await this.postsRepository.findOnePost(postId);
     };
 
     findSomePosts = async (postIds) => {
-        return await this.postsRepository.findSomePosts(postIds);
+        const posts = await this.postsRepository.findSomePosts(postIds);
+        return this.addLikes(posts)
     };
 
     findAllPost = async () => {
-        const posts = await this.postsRepository.findAllPost();
-
-        const postsLikesAdded = [];
-        for (const val of posts) {
-            const likes = await this.likesRepository.findByPost(
-                val.dataValues.postId
-            );
-            val.dataValues.likes = likes;
-            postsLikesAdded.push(val.dataValues);
-        }
-        return postsLikesAdded.sort((a, b) => b.likes - a.likes);
+        const posts = await this.postsRepository.findAllPost();      
+        return this.addLikes(posts)
     };
 
     createPost = async (userId, title, content) => {
