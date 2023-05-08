@@ -6,7 +6,7 @@ class CommentsRepository {
             return await Comments.findOne({ where: { commentId } });
         } catch (err) {
             console.error({ err });
-            throw new Error('Comment.Repository > findOneComment');
+            throw new Error('comments.repository > findOneComment');
         }
     };
 
@@ -33,7 +33,7 @@ class CommentsRepository {
             return comments;
         } catch (err) {
             console.error({ err });
-            throw new Error('Comment.Repository > findAllComments');
+            throw new Error('comments.repository > findAllComments');
         }
     };
 
@@ -46,7 +46,7 @@ class CommentsRepository {
             });
         } catch (err) {
             console.error({ err });
-            throw new Error('Comment.Repository > createComment');
+            throw new Error('comments.repository > createComment');
         }
     };
 
@@ -55,7 +55,7 @@ class CommentsRepository {
             return await Comments.update({ comment }, { where: { commentId } });
         } catch (err) {
             console.error({ err });
-            throw new Error('Comment.Repository > updateComment');
+            throw new Error('comments.repository > updateComment');
         }
     };
 
@@ -66,7 +66,7 @@ class CommentsRepository {
             });
         } catch (err) {
             console.error({ err });
-            throw new Error('Comment.Repository > deleteComment');
+            throw new Error('comments.repository > deleteComment');
         }
     };
 }
