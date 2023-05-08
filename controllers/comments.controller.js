@@ -1,14 +1,14 @@
 const CommentsService = require('../services/comments.service');
-const PostService = require('../services/posts.service');
+const PostsService = require('../services/posts.service');
 
 class CommentsController {
     commentsService = new CommentsService();
-    postService = new PostService();
+    postsService = new PostsService();
 
     getComments = async (req, res, next) => {
         const { postId } = req.params;
 
-        const post = await this.postService.findOnePost(postId);
+        const post = await this.postsService.findOnePost(postId);
 
         if (!post) {
             return res
@@ -32,7 +32,7 @@ class CommentsController {
         const { comment } = req.body;
         const { userId } = res.locals.user;
 
-        const post = await this.postService.findOnePost(postId);
+        const post = await this.postsService.findOnePost(postId);
         if (!post) {
             return res
                 .status(404)
@@ -60,7 +60,7 @@ class CommentsController {
         const { comment } = req.body;
         const { userId } = res.locals.user;
 
-        const post = await this.postService.findOnePost(postId);
+        const post = await this.postsService.findOnePost(postId);
         if (!post) {
             return res
                 .status(404)
