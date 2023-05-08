@@ -6,22 +6,27 @@ class UsersController {
     signup = async (req, res, next) => {
         const { nickname, password, confirm } = req.body;
         try {
-            if (this.usersService.nicknameCheck(nickname)) {
+            if (this.usersService.validation.nicknameCheck(nickname)) {
                 return res.status(412).json({
                     errorMessage: '닉네임의 형식이 일치하지 않습니다.',
                 });
             }
-            if (this.usersService.pwLenghtCheck(password)) {
+            if (this.usersService.validation.pwLenghtCheck(password)) {
                 return res.status(412).json({
                     errorMessage: '패스워드 형식이 일치하지 않습니다.',
                 });
             }
-            if (this.usersService.pwIncludeNicknameCheck(nickname, password)) {
+            if (
+                this.usersService.validation.pwIncludeNicknameCheck(
+                    nickname,
+                    password
+                )
+            ) {
                 return res.status(412).json({
                     errorMessage: '패스워드에 닉네임이 포함되어 있습니다.',
                 });
             }
-            if (this.usersService.pwConfirm(password, confirm)) {
+            if (this.usersService.validationpwConfirm(password, confirm)) {
                 return res
                     .status(412)
                     .json({ errorMessage: '패스워드가 일치하지 않습니다.' });
@@ -66,4 +71,4 @@ class UsersController {
     };
 }
 
-module.exports = UsersController
+module.exports = UsersController;

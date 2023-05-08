@@ -2,14 +2,22 @@ const { Users } = require('../models');
 
 class UserRepository {
     findOneUser = async (nickname) => {
-        const user = await Users.findOne({ where: { nickname } });
-        return user
-    }
+        try {
+            return await Users.findOne({ where: { nickname } });
+        } catch (err) {
+            console.error(err.message);
+            throw new Error('users.repository > findOneUser');
+        }
+    };
 
     createUser = async (nickname, password) => {
-        const user = await Users.create({ nickname, password });
-        return user
-    }
+        try {
+            return await Users.create({ nickname, password });
+        } catch (err) {
+            console.error(err.message);
+            throw new Error('users.repository > createUser');
+        }
+    };
 }
 
-module.exports = UserRepository
+module.exports = UserRepository;
