@@ -1,6 +1,6 @@
 const { Users, Posts, Sequelize } = require('../models');
 
-class PostRepository {
+class PostsRepository {
     findOnePost = async (postId) => {
         const post = await Posts.findOne({ where: { postId } });
 
@@ -82,4 +82,4 @@ class PostRepository {
     };
 }
 
-module.exports = PostRepository;
+module.exports = PostsRepository;

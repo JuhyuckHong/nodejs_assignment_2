@@ -1,11 +1,11 @@
-const PostService = require('../services/posts.service');
+const PostsService = require('../services/posts.service');
 
 class PostsController {
-    postService = new PostService();
+    postsService = new PostsService();
 
     getPosts = async (req, res, next) => {
         try {
-            const posts = await this.postService.findAllPost();
+            const posts = await this.postsService.findAllPost();
             return res.status(200).json({ posts });
         } catch (error) {
             console.log(error);
@@ -26,7 +26,7 @@ class PostsController {
         }
 
         try {
-            this.postService.createPost(userId, title, content);
+            this.postsService.createPost(userId, title, content);
             return res
                 .status(201)
                 .json({ message: '게시글 작성에 성공하였습니다.' });
@@ -40,7 +40,7 @@ class PostsController {
     findPostDetail = async (req, res, next) => {
         const { postId } = req.params;
         try {
-            const post = await this.postService.findPostDetail(postId);
+            const post = await this.postsService.findPostDetail(postId);
             return res.status(200).json({ post });
         } catch {
             return res.status(400).json({
@@ -55,7 +55,7 @@ class PostsController {
         const { userId } = res.locals.user;
 
         try {
-            const post = this.postService.findOnePost(postId);
+            const post = this.postsService.findOnePost(postId);
 
             if (post.UserId !== userId) {
                 return res.status(403).json({
@@ -73,7 +73,7 @@ class PostsController {
             });
         }
 
-        this.postService
+        this.postsService
             .updatePost(postId, title, content)
             .then((updatedPostData) => {
                 if (typeof updatedPostData !== 'number') {
@@ -97,7 +97,7 @@ class PostsController {
         const { postId } = req.params;
         const { userId } = res.locals.user;
         try {
-            const post = this.postService.findOnePost(postId);
+            const post = this.postsService.findOnePost(postId);
             if (!post) {
                 return res
                     .status(404)
@@ -114,7 +114,7 @@ class PostsController {
             });
         }
 
-        this.postService
+        this.postsService
             .deletePost(postId)
             .then((deletePostResult) => {
                 if (typeof deletePostResult !== 'number') {

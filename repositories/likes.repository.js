@@ -1,6 +1,6 @@
-const { Users, Posts, Comments, Likes, Sequelize } = require('../models');
+const { Posts, Likes } = require('../models');
 
-class LikeRepository {
+class LikesRepository {
     findLike = async (postId, userId) => {
         return await Likes.findOne({
             where: {
@@ -14,7 +14,7 @@ class LikeRepository {
         const users = await Likes.findAll({
             where: { PostId: postId },
         });
-        return users.length
+        return users.length;
     };
 
     createLike = async (postId, userId) => {
@@ -44,4 +44,4 @@ class LikeRepository {
     };
 }
 
-module.exports = LikeRepository;
+module.exports = LikesRepository;

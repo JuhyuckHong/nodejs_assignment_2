@@ -1,32 +1,32 @@
-const UserService = require('../services/users.service');
+const UsersService = require('../services/users.service');
 
-class UserController {
-    userService = new UserService();
+class UsersController {
+    usersService = new UsersService();
 
     signup = async (req, res, next) => {
         const { nickname, password, confirm } = req.body;
         try {
-            if (this.userService.nicknameCheck(nickname)) {
+            if (this.usersService.nicknameCheck(nickname)) {
                 return res.status(412).json({
                     errorMessage: '닉네임의 형식이 일치하지 않습니다.',
                 });
             }
-            if (this.userService.pwLenghtCheck(password)) {
+            if (this.usersService.pwLenghtCheck(password)) {
                 return res.status(412).json({
                     errorMessage: '패스워드 형식이 일치하지 않습니다.',
                 });
             }
-            if (this.userService.pwIncludeNicknameCheck(nickname, password)) {
+            if (this.usersService.pwIncludeNicknameCheck(nickname, password)) {
                 return res.status(412).json({
                     errorMessage: '패스워드에 닉네임이 포함되어 있습니다.',
                 });
             }
-            if (this.userService.pwConfirm(password, confirm)) {
+            if (this.usersService.pwConfirm(password, confirm)) {
                 return res
                     .status(412)
                     .json({ errorMessage: '패스워드가 일치하지 않습니다.' });
             }
-            if (await this.userService.isExistNickname(nickname)) {
+            if (await this.usersService.isExistNickname(nickname)) {
                 return res
                     .status(412)
                     .json({ errorMessage: '중복된 닉네임입니다.' });
@@ -38,8 +38,8 @@ class UserController {
             });
         }
 
-        const user = await this.userService.createUser(nickname, password);
-        const token = this.userService.grantToken(user.userId);
+        const user = await this.usersService.createUser(nickname, password);
+        const token = this.usersService.grantToken(user.userId);
         res.cookie('authorization', `Bearer ${token}`);
         return res.status(201).json({ message: '회원 가입에 성공하였습니다.' });
     };
@@ -47,13 +47,13 @@ class UserController {
     login = async (req, res, next) => {
         const { nickname, password } = req.body;
         try {
-            const user = await this.userService.findOneUser(nickname);
+            const user = await this.usersService.findOneUser(nickname);
             if (!user || password !== user.password) {
                 return res.status(412).json({
                     errorMessage: '닉네임 또는 패스워드를 확인해주세요.',
                 });
             } else {
-                const token = this.userService.grantToken(user.userId);
+                const token = this.usersService.grantToken(user.userId);
                 res.cookie('authorization', `Bearer ${token}`);
                 return res.status(200).json({ token });
             }
@@ -66,4 +66,4 @@ class UserController {
     };
 }
 
-module.exports = UserController
+module.exports = UsersController

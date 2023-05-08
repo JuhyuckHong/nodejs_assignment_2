@@ -1,15 +1,15 @@
-const LikeService = require('../services/like.service');
-const PostService = require('../services/posts.service');
+const LikesService = require('../services/likes.service');
+const PostsService = require('../services/posts.service');
 
-class LikeController {
-    likeService = new LikeService();
-    postService = new PostService();
+class LikesController {
+    likesService = new LikesService();
+    postsService = new PostsService();
 
     toggleLike = async (req, res) => {
         const { postId } = req.params;
         const { userId } = res.locals.user;
 
-        const post = await this.postService.findOnePost(postId);
+        const post = await this.postsService.findOnePost(postId);
         if (!post) {
             return res
                 .status(404)
@@ -17,17 +17,17 @@ class LikeController {
         }
 
         try {
-            const likeExist = await this.likeService.findLikeExist(
+            const likeExist = await this.likesService.findLikeExist(
                 postId,
                 userId
             );
             if (!likeExist) {
-                await this.likeService.createLike(postId, userId);
+                await this.likesService.createLike(postId, userId);
                 return res
                     .status(200)
                     .json({ message: '게시글의 좋아요를 등록하였습니다.' });
             } else {
-                await this.likeService.deleteLike(postId, userId);
+                await this.likesService.deleteLike(postId, userId);
                 return res
                     .status(200)
                     .json({ message: '게시글의 좋아요를 취소하였습니다.' });
@@ -44,7 +44,7 @@ class LikeController {
         const { userId } = res.locals.user;
 
         try {
-            const allLikedPosts = await this.likeService.findAllLikedPosts(
+            const allLikedPosts = await this.likesService.findAllLikedPosts(
                 userId
             );
             return res.status(200).json({ posts: allLikedPosts });
@@ -57,4 +57,4 @@ class LikeController {
     };
 }
 
-module.exports = LikeController;
+module.exports = LikesController;

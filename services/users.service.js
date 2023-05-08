@@ -1,15 +1,15 @@
-const UserRepository = require('../repositories/users.repository');
+const UsersRepository = require('../repositories/users.repository');
 const jwt = require('jsonwebtoken');
 
-class UserService {
-    userRepository = new UserRepository();
+class UsersService {
+    usersRepository = new UsersRepository();
 
     findOneUser = async (nickname) => {
-        return await this.userRepository.findOneUser(nickname);
+        return await this.usersRepository.findOneUser(nickname);
     };
 
     createUser = async (nickname, password) => {
-        return await this.userRepository.createUser(nickname, password);
+        return await this.usersRepository.createUser(nickname, password);
     };
 
     nicknameCheck = (nickname) => {
@@ -37,4 +37,4 @@ class UserService {
     };
 }
 
-module.exports = UserService;
+module.exports = UsersService;
