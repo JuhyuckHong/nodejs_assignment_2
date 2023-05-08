@@ -6,49 +6,93 @@ class PostsService {
     likesRepository = new LikesRepository();
 
     addLikes = async (posts) => {
-        const postsLikesAdded = []
-        for (const post of posts) {
-            const likes = await this.likesRepository.findByPost(
-                post.dataValues.postId
-            )
-            post.dataValues.likes = likes
-            postsLikesAdded.push(post.dataValues)
+        try {
+            const postsLikesAdded = [];
+            for (const post of posts) {
+                const likes = await this.likesRepository.findByPost(
+                    post.dataValues.postId
+                );
+                post.dataValues.likes = likes;
+                postsLikesAdded.push(post.dataValues);
+            }
+            return postsLikesAdded;
+        } catch (err) {
+            console.error(err.message);
+            throw new Error('posts.service > addLikes');
         }
-        return postsLikesAdded
-    }
+    };
 
     findOnePost = async (postId) => {
-        return await this.postsRepository.findOnePost(postId);
+        try {
+            return await this.postsRepository.findOnePost(postId);
+        } catch (err) {
+            console.error(err.message);
+            throw new Error('posts.service > findOnePost');
+        }
     };
 
     findSomePosts = async (postIds) => {
-        const posts = await this.postsRepository.findSomePosts(postIds);
-        return this.addLikes(posts)
+        try {
+            const posts = await this.postsRepository.findSomePosts(postIds);
+            return this.addLikes(posts);
+        } catch (err) {
+            console.error(err.message);
+            throw new Error('posts.service > findSomePosts');
+        }
     };
 
     findAllPost = async () => {
-        const posts = await this.postsRepository.findAllPost();      
-        return this.addLikes(posts)
+        try {
+            const posts = await this.postsRepository.findAllPost();
+            return this.addLikes(posts);
+        } catch (err) {
+            console.error(err.message);
+            throw new Error('posts.service > findAllPost');
+        }
     };
 
     createPost = async (userId, title, content) => {
-        return await this.postsRepository.createPost(userId, title, content);
+        try {
+            return await this.postsRepository.createPost(
+                userId,
+                title,
+                content
+            );
+        } catch (err) {
+            console.error(err.message);
+            throw new Error('posts.service > createPost');
+        }
     };
 
     findPostDetail = async (postId) => {
-        const post = await this.postsRepository.findPostDetail(postId);
-        const likes = await this.likesRepository.findByPost(postId);
-        post.dataValues.likes = likes;
-        console.log(post);
-        return post;
+        try {
+            const post = await this.postsRepository.findPostDetail(postId);
+            const likes = await this.likesRepository.findByPost(postId);
+            post.dataValues.likes = likes;
+            console.log(post);
+            return post;
+        } catch (err) {
+            console.error(err.message);
+            throw new Error('posts.service > findPostDetail');
+        }
     };
 
     updatePost = async (postId, title, content) => {
-        return this.postsRepository.updatePost(postId, title, content);
+        try {
+            return this.postsRepository.updatePost(postId, title, content);
+        } catch (err) {
+            console.error(err.message);
+            throw new Error('posts.service > updatePost');
+        }
     };
 
     deletePost = async (postId) => {
-        return await this.postsRepository.deletePost(postId);
+        try {
+            return await this.postsRepository.deletePost(postId);
+        } catch (err) {
+            console.error(err.message);
+            throw new Error('posts.service > deletePost');
+        }
     };
 }
 
